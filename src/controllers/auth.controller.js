@@ -10,7 +10,7 @@ export const register = async (req, res) => {
   const { email, password, username } = req.body;
   console.log(req.body);
   const image = {
-    url:'default.webp',
+    url:'',
     public_id: ''
   }
   try {
