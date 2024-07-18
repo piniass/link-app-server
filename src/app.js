@@ -19,12 +19,12 @@ app.options('*', cors({
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
 }));
+app.use(cookieParser())
 app.use(morgan('dev'))
 app.use(express.json())
 app.use(fileUpload({
     useTempFiles: true,
     tempFileDir:'./upload'
 }))
-app.use(cookieParser())
 app.use("/api",authRoutes)
 export default app;
