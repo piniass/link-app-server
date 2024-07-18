@@ -34,7 +34,8 @@ router.get("/auth/verify", verifyToken);
 
 // Ruta de prueba
 router.get('/test', (req, res) => {
-    res.send('Hola mundo');
-  });
+    res.json({ message: 'Hola mundo' });
+});
+
 
 export default router;
