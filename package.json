@@ -9,9 +9,7 @@
   "type": "module",
   "scripts": {
     "dev": "nodemon src/index.js",
-    "start": "node src/index.js",
-    "vercel-build": "Hola mundo!"
-
+    "start": "node src/index.js"
   },
   "keywords": [],
   "author": "",
