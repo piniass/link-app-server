@@ -71,8 +71,12 @@ export const login = async (req, res) => {
     if(!isMatch)return res.status(400).json(["Contraseña no válida"])
 
     const token = await createAccessToken({id: userFound._id})
-    res.cookie('token', token)
-    console.log(res.cookie('token'))
+    res.cookie('token', token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production', // Solo en producción
+      sameSite: 'none', // 'none' para permitir cookies en solicitudes cross-site
+      maxAge: 24 * 60 * 60 * 1000, // 1 día
+    });
     res.json({
       message: `Usuario: ${email} logeado con exito`,
       user: {
