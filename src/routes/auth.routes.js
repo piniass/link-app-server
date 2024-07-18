@@ -32,4 +32,9 @@ router.get('/link/user/:username', getLinkByName)
 
 router.get("/auth/verify", verifyToken);
 
+// Ruta de prueba
+router.get('/test', (req, res) => {
+    res.send('Hola mundo');
+  });
+
 export default router;
