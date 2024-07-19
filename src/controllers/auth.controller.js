@@ -36,7 +36,7 @@ export const register = async (req, res) => {
     res.cookie('token', token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production', // Solo en producción
-      sameSite: 'strict',
+      sameSite: 'none',
       maxAge: 24 * 60 * 60 * 1000 // 1 día
     });
         res.json({
@@ -58,8 +58,6 @@ export const register = async (req, res) => {
 
 export const login = async (req, res) => {
   const { email, password } = req.body;
-  console.log(req.body);
-
   try {
 
     const userFound = await User.findOne({email})
@@ -71,8 +69,14 @@ export const login = async (req, res) => {
     if(!isMatch)return res.status(400).json(["Contraseña no válida"])
 
     const token = await createAccessToken({id: userFound._id})
-    res.cookie('token', token);
-    console.log("Res de cookie: ",res.cookie('token',token))
+
+    res.cookie('token', token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production', // Solo en producción
+      sameSite: 'none',
+      maxAge: 24 * 60 * 60 * 1000 // 1 día
+    });
+    
     res.json({
       message: `Usuario: ${email} logeado con exito`,
       user: {
