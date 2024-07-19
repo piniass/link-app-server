@@ -72,12 +72,7 @@ export const login = async (req, res) => {
 
     const token = await createAccessToken({id: userFound._id})
     console.log("Token de acceso: ",token)
-    res.cookie('token', token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production', // Solo en producción
-      sameSite: 'none', // 'none' para permitir cookies en solicitudes cross-site
-      maxAge: 24 * 60 * 60 * 1000, // 1 día
-    });
+    res.cookie('token', token);
     console.log("Res de cookie: ",res.cookie('token',token))
     res.json({
       message: `Usuario: ${email} logeado con exito`,
