@@ -3,7 +3,7 @@ import { TOKEN_SECRET } from '../config.js'
 
 export const authRequired = (req, res, next) => {
     const { token } = req.cookies
-    console.log(token)
+    console.log("token: ",token)
     if(!token) return res.status(401).json({ message: "No hay token, autoización denegada."})
 
     jwt.verify(token, TOKEN_SECRET, (err, user) => {
