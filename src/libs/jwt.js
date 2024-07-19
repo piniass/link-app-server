@@ -12,6 +12,7 @@ export function createAccessToken(payload){
             (err,token) => {
               if(err)reject(err)
               resolve(token)
+              console.log("Token de acceso creado: ", token)
             }
           );
     })
