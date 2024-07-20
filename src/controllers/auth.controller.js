@@ -119,27 +119,30 @@ export const profile = async (req, res) => {
 export const setImage = async (req, res) => {
   let image = null;
   try {
-      console.log(req.files)
-      console.log(req.files.image.tempFilePath);
+    if (!req.files || !req.files.image) {
+      return res.status(400).json({ message: "No se subió ninguna imagen" });
+    }
 
-      const result = await uploadImage(req.files.image.tempFilePath);
-      await fs.remove(req.files.image.tempFilePath);
+    const file = req.files.image;
 
-      image = {
-        url: result.secure_url,
-        public_id: result.public_id,
-      }
+    // Subir directamente el buffer de la imagen a Cloudinary
+    const result = await uploadImage(file.data);
 
-      const imageUpdated = await User.findOneAndUpdate(
-        { _id: req.user.id },
-        { image},
-        { new: true }
-      );
+    image = {
+      url: result.secure_url,
+      public_id: result.public_id,
+    }
 
-      return res.json(imageUpdated);
+    const imageUpdated = await User.findOneAndUpdate(
+      { _id: req.user.id },
+      { image },
+      { new: true }
+    );
+
+    return res.json(imageUpdated);
   } catch (error) {
-      console.log(error);
-      return res.status(500).json({ message: error.message });
+    console.log(error);
+    return res.status(500).json({ message: error.message });
   }
 };
 

@@ -25,8 +25,12 @@ app.use(cookieParser())
 app.use(morgan('dev'))
 app.use(express.json())
 app.use(fileUpload({
-    useTempFiles: true,
-    tempFileDir:'./upload'
-}))
+    useTempFiles: false,
+    limits: { fileSize: 50 * 1024 * 1024 }, // por ejemplo, limitar a 50MB
+}));
+// app.use(fileUpload({
+//     useTempFiles: true,
+//     tempFileDir:'./upload'
+// }))
 app.use("/api",authRoutes)
 export default app;
