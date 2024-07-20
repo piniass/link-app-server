@@ -33,12 +33,10 @@ export const register = async (req, res) => {
 
     const token = await createAccessToken({id: userSaved._id})
     // Configurar la cookie con opciones adecuadas
-    res.cookie('token', token, {
-      httpOnly: true,
+    res.cookie("token", token, {
+      httpOnly: process.env.NODE_ENV !== "development",
       secure: true,
-      sameSite: 'none',
-      domain: '.vercel.app', // Ajusta esto a tu dominio real
-      maxAge: 24 * 60 * 60 * 1000 // 1 día
+      sameSite: "none",
     });
         res.json({
         message: `Usuario: ${username} creado con exito`,
@@ -71,12 +69,10 @@ export const login = async (req, res) => {
 
     const token = await createAccessToken({id: userFound._id})
 
-    res.cookie('token', token, {
-      httpOnly: true,
+    res.cookie("token", token, {
+      httpOnly: process.env.NODE_ENV !== "development",
       secure: true,
-      sameSite: 'none',
-      domain: '.vercel.app', // Ajusta esto a tu dominio real
-      maxAge: 24 * 60 * 60 * 1000 // 1 día
+      sameSite: "none",
     });
     
     res.json({
