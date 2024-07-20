@@ -32,17 +32,17 @@ export const register = async (req, res) => {
     const userSaved = await newUser.save();
 
     const token = await createAccessToken({id: userSaved._id})
-// Configurar la cookie con opciones adecuadas
+    // Configurar la cookie con opciones adecuadas
     res.cookie('token', token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production', // Solo en producción
+      secure: true,
       sameSite: 'none',
-      domain: 'https://linkeados.vercel.app',
+      domain: '.vercel.app', // Ajusta esto a tu dominio real
       maxAge: 24 * 60 * 60 * 1000 // 1 día
     });
         res.json({
-      message: `Usuario: ${username} creado con exito`,
-      user: {
+        message: `Usuario: ${username} creado con exito`,
+        user: {
         id: userSaved._id,
         username: userSaved.username,
         email: userSaved.email,
@@ -73,9 +73,9 @@ export const login = async (req, res) => {
 
     res.cookie('token', token, {
       httpOnly: true,
-      secure: true, // Siempre true en producción
+      secure: true,
       sameSite: 'none',
-      domain: '.vercel.app', // o '.linkeados.vercel.app'
+      domain: '.vercel.app', // Ajusta esto a tu dominio real
       maxAge: 24 * 60 * 60 * 1000 // 1 día
     });
     
