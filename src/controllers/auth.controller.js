@@ -73,9 +73,9 @@ export const login = async (req, res) => {
 
     res.cookie('token', token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production', // Solo en producción
+      secure: true, // Siempre true en producción
       sameSite: 'none',
-      domain: 'https://linkeados.vercel.app',
+      domain: '.vercel.app', // o '.linkeados.vercel.app'
       maxAge: 24 * 60 * 60 * 1000 // 1 día
     });
     
